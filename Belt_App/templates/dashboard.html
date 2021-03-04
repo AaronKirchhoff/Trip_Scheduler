@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <h1>Success!! Welcome, {{confirmed_user.first_name}}</h1>
+    <p>You have successfully created an account, (or logged in), Here's a cookie!</p>
+
+    <h2>MY TRIP SCHEDULE</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Destination</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Trip Notes</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mytrip in confirmed_user.added_trips.all %}
+            <!-- note time. this For is saying... for, mytrip is a variable name, you need the name of the current user, what variable name are we using for this? confirmed_user. from the the views. py context dictionary, i wanna say "I" the user, wants to look through my added_trips. added_trips is the related name in our manyTomany field. .all.  -->
+                <tr>
+                    <td width="10%"><a href="/trip/{{mytrip.id}}">{{ mytrip.destination }}</a></td>
+                    <td width="10%">{{ mytrip.start_date|date:"SHORT_DATE_FORMAT" }}</td>
+                    <td width="10%">{{ mytrip.end_date|date:"SHORT_DATE_FORMAT" }}</td>
+                    <td width="30%">{{ mytrip.trip_notes }}</td>
+                    <td width="10%" id="actions">
+                        <!-- i guess mytrip gets passed with the trip id stuff? -->
+                        <a href="/leave_trip/{{mytrip.id}}">Leave this trip</a>
+                        {% if confirmed_user.id == mytrip.creator.id %}
+                        <!-- confirmed_user.id is the id of the current session user. mytrip is the variable carrying the trip data, we then look at creator specifically and then the id if the creator. -->
+                        <form action="/trip/{{mytrip.id}}/delete" method="POST">
+                            {% csrf_token %}
+                            <input type="submit" value="delete">                       
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h1>ALL TRIPS</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Destination</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Trip Notes</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for trip in all_trips %}
+            <tr>
+                <td width="10%"><a href="/trip/{{trip.id}}">{{ trip.destination }}</a></td>
+                <td width="10%">{{ trip.start_date|date:"SHORT_DATE_FORMAT" }}</td>
+                <td width="10%">{{ trip.end_date|date:"SHORT_DATE_FORMAT" }}</td>
+                <td width="30%">{{ trip.trip_notes }}</td>
+                <td width="10%" id="actions">
+                    
+                    {% if confirmed_user in trip.users_added.all %}
+                    <p>You're going on this trip!</p>
+                    {% else %}
+                    <a href="/join_trip/{{trip.id}}">Join this trip</a>
+                    {% endif %} 
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div id="buttons">
+        <a href="/newtrip">Add a new trip</a>
+        <button onclick="location.href='http://localhost:8000/'" type="button">Create another user</button>
+        <a href="/logout">Logout</a>
+    </div>
+</body>
+

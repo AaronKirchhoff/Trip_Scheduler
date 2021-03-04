@@ -1,0 +1,55 @@
+*{
+    margin: 0px;
+    padding: 0px;
+   }
+
+#titleheader {
+    background-color: lightblue;
+    display: inline-block;
+    margin: 10px;
+    padding: 5px;
+}
+
+#returninguser {
+    background-color: lightseagreen;
+    display: inline-block;
+    margin-left: 130px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 5px;
+}
+
+#container {
+    display: inline-block;
+    width: 500px;
+    margin-left: 20px;
+    border-radius: 5px;
+    background-color: rgb(221, 231, 241);
+    padding: 20px;
+}
+
+#container2 {
+    width: 500px;
+    display: inline-block;
+    margin-left: 20px;
+    vertical-align: top;
+    border-radius: 5px;
+    background-color: rgb(221, 231, 241);
+    padding: 20px;
+}
+
+.register {
+    margin: 5px;
+    width: 100%;
+}
+
+.login {
+    margin: 5px;
+    width: 100%;
+}
+
+body {
+    margin: 10px;
+}
+
+

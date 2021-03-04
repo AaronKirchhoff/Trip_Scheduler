@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book</title>
+</head>
+<body>
+    <h1>Trip Details!</h1>
+    <h2>{{ trip.destination }}</h2>
+    <p>Planned by: {{trip.creator.first_name}} {{trip.creator.last_name}}</p>
+    <p>Added on: {{trip.created_at}}</p>
+    <p>Last Updated on: {{trip.updated_at}}</p>
+
+    
+    {% if current_user in trip.users_added.all %}
+    <p>You're going on this trip!</p>
+    {% else %}
+    <a href="/join_trip/{{trip.id}}">Join this trip</a>
+    {% endif %}
+    <br>
+    <a href="/leave_trip/{{trip.id}}">Leave this trip</a>
+
+    <p>Trip Notes: {{ trip.trip_notes }}</p>
+
+
+
+    <button onclick="location.href='http://localhost:8000/results/'" type="button">Back to my dashboard</button> 
+
+    <h1>Users who are going on this trip.</h1>
+    <ul>
+        {% for fav in trip.users_added.all %}
+        <li>{{fav.first_name}} {{fav.last_name}}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

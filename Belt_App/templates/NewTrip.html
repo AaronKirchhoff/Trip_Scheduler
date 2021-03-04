@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>new trip</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <h1>CREATE A NEW TRIP</h1>
+    {% if messages %}
+    <ul class="messages">    
+    {% for message in messages %}    
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+    {% endfor %}
+    </ul>
+    {% endif %}
+    <form action="/trip/create" method="POST">
+    {% csrf_token %}
+        <label for="Destination">Destination:</label>
+        <input type="text" id="Destination" name="destination">
+        <br>
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date">
+        <br>
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date">
+        <br>
+        <label for="trip_notes">Trip Notes:</label>
+        <input type="text" id="trip_notes" name="trip_notes">
+        <br>
+        <input type="submit" id="submit" value="Add Trip">
+    
+    </form>
+    <button onclick="location.href='http://localhost:8000/results/'" type="button">Back to my dashboard</button> 
+ 
+</body>
+</html>
